@@ -28,6 +28,15 @@ namespace GravityRift
 
         Image ballImage;
 
+        //лунка
+        float holeX = 600;
+        float holeY = 400;
+        int holeRadius = 30;
+
+        bool isWin = false;
+
+        Button restartButton = new Button();
+
         public Form1()
         {
             InitializeComponent();
@@ -40,12 +49,21 @@ namespace GravityRift
             DoubleBuffered = true;
 
             KeyDown += Form1_KeyDown;
-            
+
             timer.Interval = 16;
             timer.Tick += Timer_Tick;
             timer.Start();
 
             Paint += Form1_Paint;
+
+            restartButton.Text = "Рестарт";
+            restartButton.Size = new Size(100, 40);
+            restartButton.Location = new Point(350, 260);
+            restartButton.Visible = false;
+            restartButton.Click += RestartButton_Click;
+            Controls.Add(restartButton);
+
+            this.KeyPreview = true;
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -69,6 +87,8 @@ namespace GravityRift
 
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if (isWin) return;
+
             switch (gravityDirection)
             {
                 case 1: //вниз
@@ -115,11 +135,50 @@ namespace GravityRift
             }
 
             Invalidate();
+
+            float dx = x - holeX;
+            float dy = y - holeY;
+            float distance = (float)Math.Sqrt(dx * dx + dy * dy);
+
+            if (distance < holeRadius)
+            {
+                isWin = true;
+                speedX = 0;
+                speedY = 0;
+                restartButton.Visible = true;
+            }
         }
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            //шар
             e.Graphics.DrawImage(ballImage, x - radius, y - radius, radius * 2, radius * 2);
+            //лунка
+            e.Graphics.FillEllipse(Brushes.Black, holeX - holeRadius, holeY - holeRadius, holeRadius * 2, holeRadius * 2);
+
+            if (isWin)
+            {
+                string text = "Победа";
+                Font font = new Font("Arial", 32, FontStyle.Bold);
+                SizeF textSize = e.Graphics.MeasureString(text, font);
+
+                e.Graphics.DrawString(text, font, Brushes.Green, (ClientSize.Width - textSize.Width) / 2, 150);
+            }
+        }
+
+        private void RestartButton_Click(object sender, EventArgs e)
+        {
+            x = 400;
+            y = 100;
+            speedX = 0;
+            speedY = 0;
+            gravityDirection = 1;
+            isWin = false;
+            restartButton.Visible = false;
         }
     }
 }
+
+
+
+

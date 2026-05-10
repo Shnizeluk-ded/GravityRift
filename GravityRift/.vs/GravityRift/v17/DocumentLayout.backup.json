@@ -7,7 +7,7 @@
       "RelativeMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|solutionrelative:gravityrift\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|c:\\users\\\u0438\u0432\u0430\u043D\\gravityrift\\gravityrift\\gravityrift\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|C:\\Users\\\u0418\u0432\u0430\u043D\\GravityRift\\GravityRift\\gravityrift\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|solutionrelative:gravityrift\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -18,12 +18,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,10 +28,14 @@
               "RelativeDocumentMoniker": "GravityRift\\Form1.cs",
               "ToolTip": "C:\\Users\\\u0418\u0432\u0430\u043D\\GravityRift\\GravityRift\\GravityRift\\Form1.cs",
               "RelativeToolTip": "GravityRift\\Form1.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAACQAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAAAKAAAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-22T11:29:37.39Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Document",
@@ -46,8 +46,7 @@
               "ToolTip": "C:\\Users\\\u0418\u0432\u0430\u043D\\GravityRift\\GravityRift\\GravityRift\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "RelativeToolTip": "GravityRift\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-22T11:25:49.291Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+              "WhenOpened": "2026-04-22T11:25:49.291Z"
             }
           ]
         }
