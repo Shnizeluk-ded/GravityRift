@@ -8,3 +8,12 @@ C:\Users\Иван\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.cspr
 C:\Users\Иван\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.exe
 C:\Users\Иван\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.pdb
 C:\Users\Иван\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.exe.config
+O:\GravityRift\GravityRift\GravityRift\bin\Debug\GravityRift.exe.config
+O:\GravityRift\GravityRift\GravityRift\bin\Debug\GravityRift.exe
+O:\GravityRift\GravityRift\GravityRift\bin\Debug\GravityRift.pdb
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.csproj.AssemblyReference.cache
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.Properties.Resources.resources
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.csproj.GenerateResource.cache
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.csproj.CoreCompileInputs.cache
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.exe
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.pdb

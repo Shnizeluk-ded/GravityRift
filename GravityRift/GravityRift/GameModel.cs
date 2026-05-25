@@ -14,7 +14,8 @@ namespace GravityRift
     public class BouncePad
     {
         public Rectangle Rect;
-        public BouncePad(Rectangle rect) { Rect = rect; }
+        public string Direction;
+        public BouncePad(Rectangle rect, string direction) { Rect = rect; Direction = direction; }
     }
 
     public class DisappearingWall
@@ -110,62 +111,147 @@ namespace GravityRift
             for (int i = 0; i < 80; i++)
             {
                 bool vertical = random.Next(2) == 0;
-                int  wallX = random.Next(100, WorldWidth - 150);
-                int  wallY = random.Next(50, screenHeight - 150);
-                int  wallLength = random.Next(80, 250);
 
-                Rectangle newWall = vertical ? new Rectangle(wallX, wallY, 5, wallLength) : new Rectangle(wallX, wallY, wallLength, 5);
+                int wallX = random.Next(100, WorldWidth - 150);
+                int wallY = random.Next(50, screenHeight - 150);
+                int wallLength = random.Next(80, 250);
+
+                Rectangle newWall = vertical
+                    ? new Rectangle(wallX, wallY, 5, wallLength)
+                    : new Rectangle(wallX, wallY, wallLength, 5);
 
                 bool intersects = false;
+
                 foreach (Rectangle w in Walls)
                 {
                     Rectangle expanded = w;
                     expanded.Inflate(20, 20);
-                    if (expanded.IntersectsWith(newWall)) { intersects = true; break; }
+
+                    if (expanded.IntersectsWith(newWall))
+                    {
+                        intersects = true;
+                        break;
+                    }
                 }
 
-                Rectangle startZone = new Rectangle(0, screenHeight / 2 - 150, 250, 300);
-                Rectangle finishZone = new Rectangle((int)HoleX - 150, (int)HoleY - 150, 300, 300);
+                Rectangle startZone =
+                    new Rectangle(0, screenHeight / 2 - 150, 250, 300);
 
-                if (!intersects && !newWall.IntersectsWith(startZone) && !newWall.IntersectsWith(finishZone))
+                Rectangle finishZone =
+                    new Rectangle((int)HoleX - 150,
+                                  (int)HoleY - 150,
+                                  300,
+                                  300);
+
+                if (!intersects &&
+                    !newWall.IntersectsWith(startZone) &&
+                    !newWall.IntersectsWith(finishZone))
                 {
                     Walls.Add(newWall);
 
                     if (random.Next(100) < 10)
-                        DisappearingWalls.Add(new DisappearingWall(new Rectangle(newWall.X, newWall.Y, newWall.Width, newWall.Height)));
+                    {
+                        DisappearingWalls.Add(
+                            new DisappearingWall(
+                                new Rectangle(
+                                    newWall.X,
+                                    newWall.Y,
+                                    newWall.Width,
+                                    newWall.Height)));
+                    }
                 }
             }
 
             //батуты
             foreach (Rectangle wall in Walls)
             {
-                if (wall.Width == WorldWidth || wall.Height == screenHeight) continue;
-                if (IsDisappearing(wall)) continue;
-                if (random.Next(100) > 12) continue;
+                if (wall.Width == WorldWidth ||
+                    wall.Height == screenHeight)
+                    continue;
+
+                if (IsDisappearing(wall))
+                    continue;
+
+                if (random.Next(100) > 12)
+                    continue;
 
                 bool vertical = wall.Height > wall.Width;
-                BouncePads.Add(vertical ? new BouncePad(new Rectangle(wall.X - 10, wall.Y + wall.Height / 2, 25, 25)) : new BouncePad(new Rectangle(wall.X + wall.Width / 2, wall.Y - 10, 25, 25)));
-            }
 
-            // шипы
-            foreach (Rectangle wall in Walls)
-            {
-                if (wall.Width == WorldWidth || wall.Height == screenHeight) continue;
-                if (IsDisappearing(wall)) continue;
-                if (random.Next(100) > 20) continue;
+                Rectangle padRect;
+                string direction;
 
-                bool horizontal = wall.Width > wall.Height;
-                if (horizontal)
+                if (vertical)
                 {
-                    int spikeX = random.Next(wall.X, wall.X + wall.Width - 30);
-                    bool topSide = random.Next(2) == 0;
-                    Spikes.Add(topSide ? new Spike(new Rectangle(spikeX, wall.Y - 30, 30, 30), "DOWN") : new Spike(new Rectangle(spikeX, wall.Y + 5, 30, 30),  "UP"));
+                    bool leftSide = random.Next(2) == 0;
+                    padRect = leftSide
+                        ? new Rectangle(wall.X - 60, wall.Y + wall.Height / 2 - 30, 60, 60)
+                        : new Rectangle(wall.X + wall.Width, wall.Y + wall.Height / 2 - 30, 60, 60);
+                    direction = leftSide ? "RIGHT" : "LEFT"; // ножки к стене
                 }
                 else
                 {
-                    int  spikeY = random.Next(wall.Y, wall.Y + wall.Height - 30);
+                    bool topSide = random.Next(2) == 0;
+                    padRect = topSide
+                        ? new Rectangle(wall.X + wall.Width / 2 - 30, wall.Y - 60, 60, 60)
+                        : new Rectangle(wall.X + wall.Width / 2 - 30, wall.Y + wall.Height, 60, 60);
+                    direction = topSide ? "UP" : "DOWN" ; // ножки к стене
+                }
+
+                if (!IsAreaOccupied(padRect))
+                    BouncePads.Add(new BouncePad(padRect, direction));
+            }
+
+            //шипы
+            foreach (Rectangle wall in Walls)
+            {
+                if (wall.Width == WorldWidth ||
+                    wall.Height == screenHeight)
+                    continue;
+
+                if (IsDisappearing(wall))
+                    continue;
+
+                if (random.Next(100) > 20)
+                    continue;
+
+                bool horizontal = wall.Width > wall.Height;
+
+                if (horizontal)
+                {
+                    int spikeX =
+                        random.Next(wall.X, wall.X + wall.Width - 30);
+
+                    bool topSide = random.Next(2) == 0;
+
+                    Rectangle spikeRect = topSide
+                        ? new Rectangle(spikeX, wall.Y - 30, 30, 30)
+                        : new Rectangle(spikeX, wall.Y + 5, 30, 30);
+
+                    if (!IsAreaOccupied(spikeRect))
+                    {
+                        Spikes.Add(
+                            new Spike(
+                                spikeRect,
+                                topSide ? "DOWN" : "UP"));
+                    }
+                }
+                else
+                {
+                    int spikeY =
+                        random.Next(wall.Y, wall.Y + wall.Height - 30);
+
                     bool leftSide = random.Next(2) == 0;
-                    Spikes.Add(leftSide ? new Spike(new Rectangle(wall.X - 30, spikeY, 30, 30), "LEFT") : new Spike(new Rectangle(wall.X + 5,  spikeY, 30, 30), "RIGHT"));
+
+                    Rectangle spikeRect = leftSide
+                        ? new Rectangle(wall.X - 30, spikeY, 30, 30)
+                        : new Rectangle(wall.X + 5, spikeY, 30, 30);
+                    if (!IsAreaOccupied(spikeRect))
+                    {
+                        Spikes.Add(
+                            new Spike(
+                                spikeRect,
+                                leftSide ? "LEFT" : "RIGHT"));
+                    }
                 }
             }
         }
@@ -173,7 +259,31 @@ namespace GravityRift
         private bool IsDisappearing(Rectangle wall)
         {
             foreach (DisappearingWall dw in DisappearingWalls)
-                if (dw.Rect == wall) return true;
+            {
+                if (dw.Rect == wall)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool IsAreaOccupied(Rectangle rect)
+        {
+            Rectangle expanded = rect;
+            expanded.Inflate(5, 5);
+
+            foreach (BouncePad pad in BouncePads)
+            {
+                if (expanded.IntersectsWith(pad.Rect))
+                    return true;
+            }
+
+            foreach (Spike spike in Spikes)
+            {
+                if (expanded.IntersectsWith(spike.Rect))
+                    return true;
+            }
+
             return false;
         }
 

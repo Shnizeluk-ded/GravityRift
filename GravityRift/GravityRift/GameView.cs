@@ -13,16 +13,36 @@ namespace GravityRift
 
         //ссылка на модель
         private GameModel model;
+
         private Image ballImage;
+        private Image trampolineImage;
+        private Image spikeImage;
+        private Bitmap background;
         private float cameraX;
 
         public GameView(GameModel model)
         {
             this.model = model;
 
-            //загружаем картинку шарика
-            string path = Application.StartupPath + "\\ball.jpg";
+            string backgroundPath = Application.StartupPath + "\\background.jpg";
+            using (var raw = Image.FromFile(backgroundPath))
+            {
+                background = new Bitmap(1600, 1000);
+                using (var g = Graphics.FromImage(background))
+                g.DrawImage(raw, 0, 0, 1600, 1000);
+            }
+
+            // загружаем картинку шарика
+            string path = Application.StartupPath + "\\ball.png";
             ballImage = Image.FromFile(path);
+
+            // загружаем картинку батута
+            string trampolinePath = Application.StartupPath + "\\trampoline.png";
+            trampolineImage = Image.FromFile(trampolinePath);
+
+            // загружаем картинку шипа
+            string spikePath = Application.StartupPath + "\\spike.png";
+            spikeImage = Image.FromFile(spikePath);
 
             Size = new Size(1600, 1000);
             DoubleBuffered = true;
@@ -34,7 +54,7 @@ namespace GravityRift
             {
                 Text = "Время: 0.00 сек",
                 Font = new Font("Arial", 16, FontStyle.Bold),
-                ForeColor = Color.White,
+                ForeColor = Color.Black,
                 BackColor = Color.Transparent,
                 AutoSize = true,
                 Location = new Point(10, 10)
@@ -72,6 +92,7 @@ namespace GravityRift
         //отрисовка
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
+            e.Graphics.DrawImageUnscaled(background, 0, 0);
             e.Graphics.TranslateTransform(-cameraX, 0);
 
             DrawWave(e.Graphics);
@@ -118,37 +139,79 @@ namespace GravityRift
 
         private void DrawBouncePads(Graphics g)
         {
-            using (Brush brush = new SolidBrush(Color.Lime))
-                foreach (BouncePad pad in model.BouncePads)
-                    g.FillEllipse(brush, pad.Rect);
+            foreach (BouncePad pad in model.BouncePads)
+            {
+                Rectangle r = pad.Rect;
+                var state = g.Save();
+
+                float cx = r.X + r.Width / 2f;
+                float cy = r.Y + r.Height / 2f;
+
+                float angle;
+                switch (pad.Direction)
+                {
+                    case "UP": angle = 0f; break;
+                    case "DOWN": angle = 180f; break;
+                    case "LEFT": angle = 90f; break;
+                    case "RIGHT": angle = 270f; break;
+                    default: angle = 0f; break;
+                }
+
+                g.TranslateTransform(cx, cy);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-cx, -cy);
+
+                // Рисуем квадратом от центра, не растягивая
+                int size = Math.Min(r.Width, r.Height);
+                Rectangle drawRect = new Rectangle(
+                    (int)(cx - size / 2f),
+                    (int)(cy - size / 2f),
+                    size, size);
+
+                g.DrawImage(trampolineImage, drawRect);
+
+                g.Restore(state);
+            }
         }
 
         private void DrawSpikes(Graphics g)
         {
-            using (Brush brush = new SolidBrush(Color.Red))
+            foreach (Spike spike in model.Spikes)
             {
-                foreach (Spike spike in model.Spikes)
-                {
-                    Point[] tri;
-                    int x = spike.Rect.X, y = spike.Rect.Y;
+                Rectangle r = spike.Rect;
+                var state = g.Save();
 
-                    switch (spike.Direction)
-                    {
-                        case "UP":
-                            tri = new[] { new Point(x, y), new Point(x + 30, y), new Point(x + 15, y + 30) };
-                            break;
-                        case "DOWN":
-                            tri = new[] { new Point(x + 15, y), new Point(x, y + 30), new Point(x + 30, y + 30) };
-                            break;
-                        case "LEFT":
-                            tri = new[] { new Point(x + 30, y), new Point(x + 30, y + 30), new Point(x, y + 15) };
-                            break;
-                        default: // RIGHT
-                            tri = new[] { new Point(x, y), new Point(x + 30, y + 15), new Point(x, y + 30) };
-                            break;
-                    }
-                    g.FillPolygon(brush, tri);
+                float cx = r.X + r.Width / 2f;
+                float cy = r.Y + r.Height / 2f;
+
+                float angle;
+                switch (spike.Direction)
+                {
+                    case "UP": angle = 180f; break;
+                    case "DOWN": angle = 0f; break;
+                    case "LEFT": angle = 270f; break;
+                    case "RIGHT": angle = 90f; break;
+                    default: angle = 0f; break;
                 }
+
+                g.TranslateTransform(cx, cy);
+                g.RotateTransform(angle);
+                g.TranslateTransform(-cx, -cy);
+
+                float scale = 1.5f;
+                int scaledWidth = (int)(r.Width * scale);
+                int scaledHeight = (int)(r.Height * scale);
+
+                Rectangle scaledRect = new Rectangle(
+                    (int)(cx - scaledWidth / 2f),
+                    (int)(cy - scaledHeight / 2f),
+                    scaledWidth,
+                    scaledHeight
+                );
+
+                g.DrawImage(spikeImage, scaledRect);
+
+                g.Restore(state);
             }
         }
 
@@ -161,8 +224,12 @@ namespace GravityRift
 
         private void DrawPlayer(Graphics g)
         {
-            int r = GameModel.Radius;
-            g.DrawImage(ballImage, model.X - r, model.Y - r, r * 2, r * 2);
+            int newSize = 70;
+
+            float drawX = model.X - newSize / 2f;
+            float drawY = model.Y - newSize / 2f;
+
+            g.DrawImage(ballImage, drawX, drawY, newSize, newSize);
         }
 
         private void DrawOverlay(Graphics g)
