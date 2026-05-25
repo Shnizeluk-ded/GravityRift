@@ -58,6 +58,8 @@ namespace GravityRift
         // флаги
         public bool IsWin { get; set; }
         public bool IsGameOver { get; set; }
+        public bool JustBounced { get; set; }
+        public bool JustHitWall { get; set; }
 
         // время
         public float ElapsedTime { get; set; }
@@ -335,11 +337,29 @@ namespace GravityRift
             }
             else
             {
-                if (!CheckCollision(X + newSpeedX, Y)) { X += newSpeedX; SpeedX = newSpeedX; }
-                else SpeedX = 0;
+                if (!CheckCollision(X + newSpeedX, Y)) 
+                { 
+                    X += newSpeedX; 
+                    SpeedX = newSpeedX; 
+                }
+                else 
+                {
+                    if (SpeedX != 0)
+                        JustHitWall = true;
+                    SpeedX = 0;
+                } 
 
-                if (!CheckCollision(X, Y + newSpeedY)) { Y += newSpeedY; SpeedY = newSpeedY; }
-                else SpeedY = 0;
+                if (!CheckCollision(X, Y + newSpeedY)) 
+                { 
+                    Y += newSpeedY; 
+                    SpeedY = newSpeedY; 
+                }
+                else
+                {
+                    if (SpeedX != 0)
+                        JustHitWall = true;
+                    SpeedY = 0;
+                }
             }
 
             Rectangle playerRect = new Rectangle((int)(X - Radius), (int)(Y - Radius), Radius * 2, Radius * 2);
@@ -359,6 +379,7 @@ namespace GravityRift
             {
                 if (playerRect.IntersectsWith(pad.Rect))
                 {
+                    JustBounced = true;
                     switch (GravityDirection)
                     {
                         case 1: SpeedY = -15; break;

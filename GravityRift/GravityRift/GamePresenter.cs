@@ -9,7 +9,10 @@ namespace GravityRift
 
         private readonly Timer physicsTimer = new Timer(); 
         private readonly Timer gameTimer = new Timer(); 
-        private readonly Timer startDelayTimer = new Timer(); 
+        private readonly Timer startDelayTimer = new Timer();
+
+        private bool wasWin;
+        private bool wasGameOver;
 
         public GamePresenter(GameModel model, GameView view)
         {
@@ -45,10 +48,10 @@ namespace GravityRift
         {
             switch (key)
             {
-                case Keys.Down: model.GravityDirection = 1; break;
-                case Keys.Up: model.GravityDirection = 2; break;
-                case Keys.Left: model.GravityDirection = 3; break;
-                case Keys.Right: model.GravityDirection = 4; break;
+                case Keys.Down: model.GravityDirection = 1; view.PlaySound("gravity.mp3"); break;
+                case Keys.Up: model.GravityDirection = 2; view.PlaySound("gravity.mp3"); break;
+                case Keys.Left: model.GravityDirection = 3; view.PlaySound("gravity.mp3"); break;
+                case Keys.Right: model.GravityDirection = 4; view.PlaySound("gravity.mp3"); break;
             }
         }
 
@@ -56,6 +59,27 @@ namespace GravityRift
         private void OnPhysicsTick(object sender, System.EventArgs e)
         {
             model.Update();
+
+            // победа
+            if (model.IsWin && !wasWin)
+            {
+                view.PlaySound("win.mp3");
+                wasWin = true;
+            }
+
+            // поражение / смерть
+            if (model.IsGameOver && !wasGameOver)
+            {
+                view.PlaySound("death.mp3");
+                wasGameOver = true;
+            }
+
+            // отскок от батута
+            if (model.JustBounced)
+            {
+                view.PlaySound("bounce.mp3");
+                model.JustBounced = false;
+            }
 
             view.UpdateCamera();
 
@@ -87,6 +111,9 @@ namespace GravityRift
         private void OnRestartClicked(object sender, System.EventArgs e)
         {
             model.Reset();
+
+            wasWin = false;
+            wasGameOver = false;
 
             view.RestartButton.Visible = false;
             view.TimerLabel.Text = "Время: 0.00 сек";

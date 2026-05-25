@@ -17,3 +17,5 @@ O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.csproj.GenerateReso
 O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.csproj.CoreCompileInputs.cache
 O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.exe
 O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.pdb
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\Interop.WMPLib.dll
+O:\GravityRift\GravityRift\GravityRift\obj\Debug\GravityRift.csproj.ResolveComReference.cache

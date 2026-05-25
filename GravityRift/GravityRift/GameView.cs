@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace GravityRift
 {
@@ -19,6 +20,8 @@ namespace GravityRift
         private Image spikeImage;
         private Bitmap background;
         private float cameraX;
+
+        private WindowsMediaPlayer soundPlayer = new WindowsMediaPlayer();
 
         public GameView(GameModel model)
         {
@@ -257,6 +260,13 @@ namespace GravityRift
                     g.DrawString(loseText, lf, Brushes.Red, (ClientSize.Width - ls.Width) / 2, 150);
                 }
             }
+        }
+
+        public void PlaySound(string fileName)
+        {
+            WindowsMediaPlayer player = new WindowsMediaPlayer();
+            player.URL = Application.StartupPath + "\\" + fileName;
+            player.controls.play();
         }
     }
 }
