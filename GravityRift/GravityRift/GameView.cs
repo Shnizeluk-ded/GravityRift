@@ -8,6 +8,7 @@ namespace GravityRift
     public class GameView : Form
     {
         public Button RestartButton{ get; }
+        public Button ExitButton { get; }
         public Label TimerLabel{ get; }
 
         public event Action<Keys> OnKeyPressed;
@@ -73,6 +74,25 @@ namespace GravityRift
             };
             Controls.Add(RestartButton);
 
+            // кнопка выхода
+            ExitButton = new Button
+            {
+                Text = "X",
+                Size = new Size(40, 40),
+                Location = new Point(ClientSize.Width - 50, 10),
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                Font = new Font("Arial", 14, FontStyle.Bold),
+                BackColor = Color.DarkRed,
+                ForeColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                TabStop = false // ВАЖНО
+            };
+
+            ExitButton.FlatAppearance.BorderSize = 0;
+
+            Controls.Add(ExitButton);
+            ExitButton.TabStop = false;
+
             //ввод
             KeyDown += (s, e) => OnKeyPressed?.Invoke(e.KeyCode);
 
@@ -90,6 +110,12 @@ namespace GravityRift
         public void CenterRestartButton()
         {
             RestartButton.Location = new Point((ClientSize.Width  - RestartButton.Width)  / 2, (ClientSize.Height - RestartButton.Height) / 2);
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            OnKeyPressed?.Invoke(keyData);
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         //отрисовка

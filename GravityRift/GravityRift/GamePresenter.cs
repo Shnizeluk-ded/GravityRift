@@ -31,6 +31,8 @@ namespace GravityRift
 
             startDelayTimer.Interval = 2000;
             startDelayTimer.Tick    += OnStartDelayTick;
+
+            this.view.ExitButton.Click += (s, e) => Application.Exit();
         }
 
         //запуск

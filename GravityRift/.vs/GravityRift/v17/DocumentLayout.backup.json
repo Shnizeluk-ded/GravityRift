@@ -3,15 +3,15 @@
   "WorkspaceRootPath": "O:\\GravityRift\\GravityRift\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|O:\\GravityRift\\GravityRift\\gravityrift\\gameview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|o:\\gravityrift\\gravityrift\\gravityrift\\gameview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|solutionrelative:gravityrift\\gameview.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|o:\\gravityrift\\gravityrift\\gravityrift\\gamepresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|O:\\GravityRift\\GravityRift\\gravityrift\\gamepresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|solutionrelative:gravityrift\\gamepresenter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|o:\\gravityrift\\gravityrift\\gravityrift\\gamemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|O:\\GravityRift\\GravityRift\\gravityrift\\gamemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{9F34BFF4-583B-4397-8DB2-10604ECBFC97}|GravityRift\\GravityRift.csproj|solutionrelative:gravityrift\\gamemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "GravityRift\\GamePresenter.cs",
               "ToolTip": "O:\\GravityRift\\GravityRift\\GravityRift\\GamePresenter.cs",
               "RelativeToolTip": "GravityRift\\GamePresenter.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAgwF0AAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwCAAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-25T13:57:34.781Z",
               "EditorCaption": ""
@@ -49,7 +49,7 @@
               "RelativeDocumentMoniker": "GravityRift\\GameView.cs",
               "ToolTip": "O:\\GravityRift\\GravityRift\\GravityRift\\GameView.cs",
               "RelativeToolTip": "GravityRift\\GameView.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAMwFEAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAYBAAAAAAAAAAAMwCMBAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-24T13:56:46.144Z",
               "EditorCaption": ""
